@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView 
-from .models import Person
+from .models import Person, Reunion
 
 from rest_framework.generics import (
     ListAPIView,
@@ -11,7 +11,13 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView,
 )
 
-from .serializers import PersonSerializer
+from .serializers import (
+    PersonSerializer,
+    PersonaSerializer,
+    SerializerDos,
+    PersonaSerializer2,
+    ReunionSerializer
+)
 
 
 class ListaPersonaListView(ListView):
@@ -73,10 +79,35 @@ class PersonRetriveUpdateView(RetrieveUpdateAPIView):
     serializer_class = PersonSerializer # recibe los datos y transforma el resultado y como si fuera el form y el tamplete
     queryset = Person.objects.all()
 
+class PersonasApiLista(ListAPIView):
+
+    serializer_class = PersonaSerializer
+    queryset = Person.objects.all()
+
+class Listadiferente(ListAPIView):
+    """ lista personas con un campo q no está en el model"""
+
+    serializer_class = SerializerDos
+    
+    def get_queryset(self):            
+        return Person.objects.all()
+    
+
+class Listadiferente2(ListAPIView):
+    """ lista personas con un campo q no está en el model"""
+
+    serializer_class = PersonaSerializer2
+    
+    def get_queryset(self):            
+        return Person.objects.all()
 
 
+class ReunionApiList(ListAPIView):
 
+    serializer_class = ReunionSerializer
 
-
+    def get_queryset(self):
+        
+        return Reunion.objects.all()
 
 

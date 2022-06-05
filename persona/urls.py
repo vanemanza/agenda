@@ -8,6 +8,11 @@ from .views import (
     PersonDeleteView,
     PersonUpdateView,
     PersonRetriveUpdateView,
+    PersonasApiLista,
+    Listadiferente,
+    Listadiferente2,
+    ReunionApiList,
+    
 )
 
 app_name = 'persona_app'
@@ -21,4 +26,9 @@ urlpatterns = [
     path('api/persona/delete/<pk>', PersonDeleteView.as_view()),
     path('api/persona/update/<pk>', PersonUpdateView.as_view()),
     path('api/persona/modificar/<pk>', PersonRetriveUpdateView.as_view()),
+    path('api/personas/lista', PersonasApiLista.as_view()),
+    path('api/personas/activos', Listadiferente.as_view()),
+    path('api/personasdos/activos', Listadiferente2.as_view()),
+    path('api/reuniones', ReunionApiList.as_view())
+    
 ]
