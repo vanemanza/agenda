@@ -12,6 +12,9 @@ from .views import (
     Listadiferente,
     Listadiferente2,
     ReunionApiList,
+    ReunionCompleta,
+    ReunionApiList22,  
+    PersonasPaginadas
     
 )
 
@@ -29,6 +32,9 @@ urlpatterns = [
     path('api/personas/lista', PersonasApiLista.as_view()),
     path('api/personas/activos', Listadiferente.as_view()),
     path('api/personasdos/activos', Listadiferente2.as_view()),
-    path('api/reuniones', ReunionApiList.as_view())
+    path('api/reuniones', ReunionApiList.as_view()), 
+    path('api/reunionCompleta', ReunionCompleta.as_view()),
+    path('api/reuniones2', ReunionApiList22.as_view()), 
+    path('api/paginadas', PersonasPaginadas.as_view())
     
 ]

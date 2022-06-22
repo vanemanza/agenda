@@ -16,21 +16,24 @@ from .serializers import (
     PersonaSerializer,
     SerializerDos,
     PersonaSerializer2,
-    ReunionSerializer
+    ReunionSerializer,
+    PersonaHobbySerializer,
+    ReuSerializerMil, 
+    PersonaPaginacion
 )
 
 
 class ListaPersonaListView(ListView):
     #model = Person
-    template_name = "personas.html"
-    context_object_name = 'personas'
+    template_name = "personas.html" # muestra la info del contexto
+    context_object_name = 'personas' # recibe la info del queryset y se la envia al html
 
-    def get_queryset(self):       
+    def get_queryset(self): # el queryset hace un llamado a la BD, lista la info y se la pasa al contexto(context_object_name) 
         return Person.objects.all()
 
 class PersonListApiView(ListAPIView):
 
-    serializer_class = PersonSerializer    # indica bajo q formato quiero q serialice la información
+    serializer_class = PersonSerializer    # indica bajo q formato quiero q serialice la información que recibe 
     # 2) con el serializador convierto el queryset en json y viceversa
     
     # 1) el queryset recupera los datos q quiero convertir en json
@@ -55,17 +58,18 @@ class PersonCreateView(CreateAPIView):
 
     serializer_class = PersonSerializer #recibe un json y lo transforma a datos de python
 
-class PersonDetailView(RetrieveAPIView):
+class PersonDetailView(RetrieveAPIView): # equivalente al DetailView
     # 1) el detailView necesita q le pasemos un model en donde buscar el registro q necesito
     # el q le paso x la url
     # casi todas las vistas de DRF q necesiten un modelo, usan un QUERYSET en su lugar
     # en el QUERYSET especifico un conjunto de datos donde el RetrieveAPiView va a hacer la busqueda
+    # le tengo q pasar un id x parametro para q lo busque en el queryset
 
     serializer_class = PersonSerializer
     # queryset = Person.objects.all() # si lo hago asi va a buscar el pk en todo el modelo
     # queryset = Person.objects.filter(anulate=False) # buscar q hace el anulate-> es una caract del REtrieve?
     queryset = Person.objects.filter() #porque no le indico ningun parametro al filtro? 
-
+       
 
 class PersonDeleteView(DestroyAPIView):
     serializer_class = PersonSerializer
@@ -81,7 +85,7 @@ class PersonRetriveUpdateView(RetrieveUpdateAPIView):
 
 class PersonasApiLista(ListAPIView):
 
-    serializer_class = PersonaSerializer
+    serializer_class = PersonaSerializer #trabajando con un serializers.Serializer
     queryset = Person.objects.all()
 
 class Listadiferente(ListAPIView):
@@ -110,4 +114,20 @@ class ReunionApiList(ListAPIView):
         
         return Reunion.objects.all()
 
+class ReunionCompleta(ListAPIView):
+    serializer_class = PersonaHobbySerializer
+    queryset = Person.objects.all()
 
+
+class ReunionApiList22(ListAPIView):
+
+    serializer_class = ReuSerializerMil
+    def get_queryset(self):        
+        return Reunion.objects.all()
+
+class PersonasPaginadas(ListAPIView): 
+    """ vista con paginación"""
+    serializer_class = PersonaSerializer 
+    pagination_class = PersonaPaginacion
+    def get_queryset(self):
+        return Person.objects.all()        

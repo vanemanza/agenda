@@ -33,6 +33,7 @@ class Reunion(models.Model):
 
     persona = models.ForeignKey(Person, on_delete=models.CASCADE)
     fecha = models.DateField()
+    hora = models.TimeField()
     asunto = models.CharField("Asunto", max_length=100)
 
     class Meta:
